@@ -62,7 +62,7 @@ namespace DisplayOcupator
 				var mythic = cardInfos.Any(i => i.Rarity == "mythic") ? cardInfos.Where(i => i.Rarity == "mythic").Average(i => Convert(i.Price)) : 0m;
 				var busters = numericUpDown1.Value;
 				return
-					string.Format("Mythic: {5:00.00}({6:00.00}){0}Rare: {1:00.00}({7:00.00}){0}Uncommon: {2:00.00}({8:00.00}){0}Common: {3:00.00}({9:00.00}){0}Overall Rare and Mythic: {4:00.00}",
+					string.Format("Mythic: ${5:00.00}(${6:00.00}){0}Rare: ${1:00.00}(${7:00.00}){0}Uncommon: ${2:00.00}(${8:00.00}){0}Common: ${3:00.00}(${9:00.00}){0}Overall Rare and Mythic: ${4:00.00}",
 						Environment.NewLine, rare*busters, uncommon*busters*3, common*busters*11, (rare * 0.875m + mythic * 0.125m) * busters, mythic * busters / 8,
 						mythic, rare, uncommon, common);
 			}
