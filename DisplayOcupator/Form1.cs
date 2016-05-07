@@ -134,7 +134,6 @@ namespace DisplayOcupator
 			do
 			{
 				var cardsData = await cardsClient.GetStringAsync(url + "&page=" + page++);
-
 				IEnumerable<dynamic> result = (dynamic)JsonConvert.DeserializeObject(cardsData);
 				var tasks = result.Select(c => ((Task<CardInfo>)GetCardData(c, cardsClient, setName, token)).ToObservable());
 				found = tasks.Count();
@@ -157,10 +156,12 @@ namespace DisplayOcupator
 			info.Rarity = ((IEnumerable<dynamic>) card.editions).First(e => e.set == setName).rarity;
 			var erspString = string.Format("http://magictcgprices.appspot.com/api/cfb/price.json?cardname={0}&setname={1}",
 				info.Name.Replace("Æ", "AE"), setName);
-			var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Get, erspString)
+			var response = await client.SendAsync(
+						new HttpRequestMessage(HttpMethod.Get, erspString)
 						{
 							Headers = {{"Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"}}
 						}, token);
+
 			var price = await response.Content.ReadAsStringAsync();
 
 			try
